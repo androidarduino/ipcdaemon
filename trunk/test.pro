@@ -3,11 +3,11 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = runtest
 DEPENDPATH += .
 INCLUDEPATH += .
-QT += network 
+QT += network testlib
 
 # Input
-HEADERS += servicemanager.h
-SOURCES += client.cpp main.cpp service.cpp servicemanager.cpp
+HEADERS += servicemanager.h test.h
+SOURCES += client.cpp service.cpp servicemanager.cpp test.cpp
