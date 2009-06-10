@@ -47,7 +47,7 @@ class ServiceManager: public QObject
     Q_OBJECT
     public:
         ServiceManager();
-        void listen(int port);
+        bool listen(int port);
         static ulong idCount;
     private slots:
         void connected();

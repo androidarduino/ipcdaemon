@@ -5,9 +5,10 @@ ServiceManager::ServiceManager()
 
 }
 
-void ServiceManager::listen(int port)
+bool ServiceManager::listen(int port)
 {
     qDebug()<<port;
+    return true;
 }
 
 void ServiceManager::connected()
