@@ -4,8 +4,10 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 #include <QString>
-#include <map>
-#include <list>
+#include <QMap>
+#include <QList>
+
+typdef Soap QString;
 
 class ServiceManager;
 
@@ -14,15 +16,14 @@ class Client: public QObject
     Q_OBJECT
     public:
         Client(QTcpSocket* socket, ServiceManager* parent);
-        void send(QString cmd);
+        int send(QString cmd, Soap payload);//send a request to the ipc daemon
     private:
-        ulong id;
+        ulong m_id;
         QTcpSocket* m_socket;
     private slots:
         void readyRead();
-    signals:
-        void dataArrived(ulong id, QString data);
-        void receive(QString cmd);
+    public slots:
+        void gotReply(int taskId, Soap result);
 };
 
 class Service: public QObject
@@ -38,8 +39,8 @@ class Service: public QObject
         QString executable;
         QString workDir;
         long loadingTime;
-        std::map<QString, long> avgAnsTime;
-        std::map<QString, long> totalCalled;
+        QMap<QString, long> avgAnsTime;
+        QMap<QString, long> totalCalled;
 };
 
 class ServiceManager: public QObject
@@ -50,13 +51,14 @@ class ServiceManager: public QObject
         bool listen(int port);
         static ulong idCount;
     private slots:
-        void connected();
-        void disconnected();
-        int reg(QString soap);
-        long call(QString svr, QString soap);
+        void connected();//when new connection request comes in
+        int reg(QString soap);//register a service
+        long call(QString svr, QString soap);//call a service application
+        void serviceOnline(QString svr);
+        void serviceOffline(QString svr);
     private:
-        std::list<Client> m_clients;
-        std::map<QString, Service> m_services;
+        QList<Client*> m_clients;
+        QMap<QString, Service*> m_services;
         QTcpServer* server;
 };
 
