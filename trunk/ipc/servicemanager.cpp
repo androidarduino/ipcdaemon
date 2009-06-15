@@ -2,7 +2,7 @@
 
 ServiceManager::ServiceManager()
 {
-
+    connect(server, SIGNAL(newConnection), this, SLOT(connected()));
 }
 
 bool ServiceManager::listen(int port)
@@ -13,12 +13,12 @@ bool ServiceManager::listen(int port)
 
 void ServiceManager::connected()
 {
-
-}
-
-void ServiceManager::disconnected()
-{
-
+    qDebug()<<"new connection requested. ";
+    while(server->hasPendingConnections())
+    {
+        Client* client=new Client(server->nextPendingConnection(), this);
+        m_clients<<client;
+    }
 }
 
 int ServiceManager::reg(QString soap)
