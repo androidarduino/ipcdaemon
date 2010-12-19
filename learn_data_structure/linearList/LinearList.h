@@ -4,6 +4,7 @@
         2. find out how much memory should be reallocated when the storage is insufficient
         3. check for memory leaks
         4. do more tests on this class, with various types and classes
+        5. optimize towards better performance, use const/reference wherever possible
 */
 
 #ifndef LINEARLIST_H
@@ -13,19 +14,10 @@
 #include <iostream>
 #endif
 
+#include "../errors.h"
+
 namespace vrcats
 {
-    class Errors
-    {
-        class indexOutOfRange
-        {
-
-        };
-        class unableToAllocateSpace
-        {
-
-        };
-    };
     template <class T> class LinearList
     {
         public:
