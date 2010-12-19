@@ -14,10 +14,10 @@ int main()
     list.insert(3);
     list.print();
     std::cout<<"insert 2"<<std::endl;
-    list.insert(2);
+    list<<2;
     list.print();
     std::cout<<"insert 1"<<std::endl;
-    list.insert(1);
+    list<<1;
     list.print();
     std::cout<<"insert 4, 2"<<std::endl;
     list.insert(4,2);

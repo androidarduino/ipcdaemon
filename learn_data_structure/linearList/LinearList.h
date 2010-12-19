@@ -1,3 +1,11 @@
+/*
+    TODO: 
+        1. implement the sort function
+        2. find out how much memory should be reallocated when the storage is insufficient
+        3. check for memory leaks
+        4. do more tests on this class, with various types and classes
+*/
+
 #ifndef LINEARLIST_H
 #define LINEARLIST_H
 
@@ -29,6 +37,7 @@ namespace vrcats
             T& operator[](long index);
             long find(T item, long from=1);
             int insert(T item, long before=-1);
+            void operator<<(T item);
             int del(long index);
             int sort(bool smallerFirst=true);
 #ifdef DEBUG
@@ -137,6 +146,11 @@ namespace vrcats
             d_head[before-1]=item;
             d_length++;
             return 0;//success
+        }
+    template <class T>
+        void LinearList<T>::operator<<(T item)
+        {
+            insert(item);
         }
     template <class T>
         int LinearList<T>::del(long index)
