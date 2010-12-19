@@ -32,6 +32,9 @@ int main()
     list.insert(7, 20);
     list.print();
     //find
+    std::cout<<"Found 4 at: "<<list.find(4)<<std::endl;
+    std::cout<<"Found 5 from 2 at: "<<list.find(5,2)<<std::endl;
+    std::cout<<"Found 7 at: "<<list.find(7)<<std::endl<<std::endl;
     //del
     std::cout<<"del 3"<<std::endl;
     list.del(3);

@@ -27,7 +27,7 @@ namespace vrcats
             int clear();
             long length();
             T& operator[](long index);
-            long find(T& item);
+            long find(T item, long from=1);
             int insert(T item, long before=-1);
             int del(long index);
             int sort(bool smallerFirst=true);
@@ -38,9 +38,7 @@ namespace vrcats
             long d_length, d_maxLength;
             T* d_head;
     };
-
 #ifdef DEBUG
-
     template <class T>
         void LinearList<T>::print()
         {
@@ -52,7 +50,6 @@ namespace vrcats
                 std::cout<<d_head[i]<<", ";
             std::cout<<std::endl<<std::endl;
         }
-
 #endif
     template <class T> 
         LinearList<T>::LinearList(long initialMaxLength)
@@ -68,13 +65,11 @@ namespace vrcats
             d_length=0;
             d_maxLength=initialMaxLength;
         }
-
     template <class T>
         LinearList<T>::~LinearList()
         {
             delete[] d_head;
         }
-
     template <class T>
         int LinearList<T>::resize(long newMaxLength)
         {
@@ -97,20 +92,17 @@ namespace vrcats
             d_maxLength=newMaxLength;
             return 0;
         }
-
     template <class T>
         int LinearList<T>::clear()
         {
             d_length=0;
             return 0;
         }
-
     template <class T>
         long LinearList<T>::length()
         {
             return d_length;
         }
-
     template <class T>
         T& LinearList<T>::operator[](long index)
         {
@@ -120,16 +112,16 @@ namespace vrcats
             }
             return d_head[index-1];
         }
-
     template <class T>
-        long LinearList<T>::find(T& item)
+        long LinearList<T>::find(T item, long from)
         {
-            for(int i=0;i<d_length;i++)
+            if(from<1||from>d_length)
+                return -1;
+            for(int i=from-1;i<d_length;i++)
                 if(item==d_head[i])
-                    return i;
+                    return i+1;
             return -1;//not found
         }
-
     template <class T>
         int LinearList<T>::insert(T item, long before)
         {
@@ -159,13 +151,11 @@ namespace vrcats
             d_length--;
             return 0;//success
         }
-
     template <class T>
         int LinearList<T>::sort(bool smallerFirst)
         {
             /* this requires T to implement operator ">" */
         }
-
 }
 
 #endif
