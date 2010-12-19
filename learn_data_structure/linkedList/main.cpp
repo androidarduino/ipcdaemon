@@ -1,7 +1,5 @@
 #define DEBUG
 #include "LinkedList.h"
-#include "CircularList.h"
-#include "DoubleLinkedList.h"
 using namespace vrcats;
 /*
     The purpose of this file is to test the class

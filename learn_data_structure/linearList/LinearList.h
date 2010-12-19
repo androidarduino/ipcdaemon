@@ -35,7 +35,7 @@ namespace vrcats
 #ifdef DEBUG
             void print();
 #endif
-        private:
+        protected:
             long d_length, d_maxLength;
             T* d_head;
     };
