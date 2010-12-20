@@ -1,0 +1,7 @@
+augroup filetypedetect
+au BufNewFile,BufRead *.qdoc,*.doc,*.book,*leaf    setfiletype doc
+au BufNewFile,BufRead *.pro,*.pri,*.prf	    setfiletype pro
+au BufNewFile,BufRead *.ui,*.qrc		    setfiletype xml
+au BufNewFile,BufRead *.qs		    setfiletype javascript
+au BufNewFile,BufRead,StdinReadPost *
+augroup END
