@@ -1,5 +1,6 @@
 #define DEBUG
-#include "LinearList.h"
+#include <iostream>
+#include "LinkedList.h"
 using namespace vrcats;
 /*
     The purpose of this file is to test the class
@@ -7,13 +8,12 @@ using namespace vrcats;
 int main()
 {
     //creation
-    LinkedList<int> list5(5);
-    LinkedList<long> list;
+    LinkedList<int> list;
     //insert
     std::cout<<"insert 3"<<std::endl;
     list.insert(3);
     list.print();
-    std::cout<<"insert 2"<<std::endl;
+    //std::cout<<"insert 2"<<std::endl;
     list<<2;
     list.print();
     std::cout<<"insert 1"<<std::endl;
@@ -61,12 +61,6 @@ int main()
     list.print();
     std::cout<<"item 1,2,3 are: "<<list[1]<<", "<<list[2]<<", "<<list[3]<<std::endl;
     //resize
-    std::cout<<"resize 6"<<std::endl;
-    list.resize(6);
-    list.print();
-    std::cout<<"resize 2"<<std::endl;
-    list.resize(2);
-    list.print();
     //clear
     list.clear();
     list.print();

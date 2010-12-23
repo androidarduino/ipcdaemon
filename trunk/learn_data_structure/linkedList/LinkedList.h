@@ -61,25 +61,25 @@ namespace vrcats
     };
 
     template <class T>
-    ListNode::ListNode(T* content)
+    ListNode<T>::ListNode(T* content)
     {
         d_previous=0;
         d_next=0;
         d_content=content;
     }
     template <class T>
-    ListNode::~ListNode()
+    ListNode<T>::~ListNode()
     {
         delete d_content;
     }
     template <class T>
-    void ListNode::hook(ListNode* previous)
+    void ListNode<T>::hook(ListNode* previous)
     {
         d_previous=previous;
-        previous.d_next=this;
+        previous->d_next=this;
     }
     template <class T>
-    LinkedList::LinkedList()
+    LinkedList<T>::LinkedList()
     {
         //init member variables
         d_head=0;
@@ -87,17 +87,17 @@ namespace vrcats
         d_length=0;
     }
     template <class T>
-    LinkedList::~LinkedList()
+    LinkedList<T>::~LinkedList()
     {
         clear();
     }
     template <class T>
-    int LinkedList::clear()
+    int LinkedList<T>::clear()
     {
         //delete all items
         while(d_head!=0)
         {
-            ListNode* next=d_head->d_next;
+            ListNode<T>* next=d_head->d_next;
             delete d_head;
             d_head=next;
         }
@@ -105,59 +105,63 @@ namespace vrcats
         return 0;
     }
     template <class T>
-    long LinkedList::length()
+    long LinkedList<T>::length()
     {
         return d_length;
     }
     template <class T>
-    T& LinkedList::operator[](long index)
+    T& LinkedList<T>::operator[](long index)
     {
         //check parameter
         if(index<1||index>d_length)
             throw(Errors::indexOutOfRange());
         //return item with index speicified
         //TODO: optimize using d_tail
-        ListNode* p=d_head;
+        ListNode<T>* p=d_head;
         for(int i=1;i<index;i++)
             p=p->d_next;
         return *(p->d_content);
     }
     template <class T>
-    long LinkedList::find(T item, long from)
+    long LinkedList<T>::find(T item, long from)
     {
         if(from<1||from>d_length)
             throw(Errors::indexOutOfRange());
-        ListNode* p=d_head;
-        for(int i=1;i<before;i++)
+        ListNode<T>* p=d_head;
+        for(int i=1;i<from;i++)
             p=p->d_next;
         while(p!=0)
         {
             if(*(p->d_content)==item)
-                return before;
-            before++;
+                return from;
+            from++;
             p=p->d_next;
         }
         return -1;
     }
     template <class T>
-    int LinkedList::insert(T item, long before=-1)
+    int LinkedList<T>::insert(T item, long before)
     {
+        print();
         if(before==-1)
             before=d_length+1;
         //create the new item
+        ListNode<T>* newNode;
         try
         {
-            ListNode* newNode=new ListNode(&T);
+            newNode=new ListNode<T>(&item);
         }
         catch(int e)
         {
             throw(Errors::unableToAllocateSpace());
         }
-        ListNode* p=d_head;
+        ListNode<T>* p=d_head;
         for(int i=1;i<before-1;i++)
             p=p->d_next;
-        ListNode* oneBeforeBefore=p;
-        ListNode* Before=p->d_next;
+        ListNode<T>* oneBeforeBefore=p;
+        ListNode<T>* Before=0;
+        if(p!=0)
+            Before=p->d_next;
         //hook new item to the one 1 before before
         if(oneBeforeBefore!=0)
             newNode->hook(oneBeforeBefore);
@@ -168,31 +172,44 @@ namespace vrcats
             Before->hook(newNode);
         else
             d_tail=newNode;
+        d_length++;
     }
     template <class T>
-    void LinkedList::operator<<(T item)
+    void LinkedList<T>::operator<<(T item)
     {
-        insert(T);
+        insert(item);
     }
     template <class T>
-    int LinkedList::del(long index)
+    int LinkedList<T>::del(long index)
     {
         //check parameter
         //delete item with index specified
-        ListNode* p=d_head;
+        ListNode<T>* p=d_head;
         for(int i=1;i<index-1;i++)
             p=p->d_next;
         //hook next to previous if both available
-        ListNode* previous=p;
+        ListNode<T>* previous=p;
         p=p->d_next;
-        ListNode* next=p->next;
+        ListNode<T>* next=p->d_next;
         if(next!=0)
             next->hook(previous);
         delete p;
     }
     template <class T>
-    int LinkedList::sort(bool)
+    int LinkedList<T>::sort(bool)
     {
+    }
+    template <class T>
+    void LinkedList<T>::print()
+    {
+        ListNode<T>* p=d_head;
+        std::cout<<std::endl<<"LinkedList: "<<std::endl;
+        for(int i=1;i<=d_length;i++)
+        {
+            std::cout<<*(p->d_content)<<", ";
+            p=p->d_next;
+        }
+        std::cout<<std::endl<<std::endl;
     }
 }
 #endif
