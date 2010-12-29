@@ -1,7 +1,6 @@
 /*
     TODO:
     1. consider to make ListNode a private class, or add LinkedList as a friend of it, making all members protected to avoid exposing them
-    2. i am facing a very weird problem. when the program gets executed, the memory seems to get overwritten by something, there might be some implicit mistake in the classes, this must be investigated in depth when i have time, to resolve the segmentation fault.
 */
 
 #ifndef LINKEDLIST_H
@@ -22,7 +21,7 @@ namespace vrcats
             ListNode(T* content);
             virtual ~ListNode();
             void hook(ListNode* previous);
-            T* d_content;
+            T d_content;
             ListNode* d_previous, * d_next;
     };
     template <class T>
@@ -66,12 +65,12 @@ namespace vrcats
     {
         d_previous=0;
         d_next=0;
-        d_content=content;
+        d_content=*content;
     }
     template <class T>
     ListNode<T>::~ListNode()
     {
-        delete d_content;
+        //delete d_content;
     }
     template <class T>
     void ListNode<T>::hook(ListNode* previous)
@@ -96,7 +95,7 @@ namespace vrcats
     int LinkedList<T>::clear()
     {
         //delete all items
-        while(d_head!=0)
+        for(int i=1;i<=d_length;i++)
         {
             ListNode<T>* next=d_head->d_next;
             delete d_head;
@@ -121,7 +120,7 @@ namespace vrcats
         ListNode<T>* p=d_head;
         for(int i=1;i<index;i++)
             p=p->d_next;
-        return *(p->d_content);
+        return p->d_content;
     }
     template <class T>
     long LinkedList<T>::find(T item, long from)
@@ -133,7 +132,7 @@ namespace vrcats
             p=p->d_next;
         while(p!=0)
         {
-            if(*(p->d_content)==item)
+            if(p->d_content==item)
                 return from;
             from++;
             p=p->d_next;
@@ -143,9 +142,6 @@ namespace vrcats
     template <class T>
     int LinkedList<T>::insert(T item, long before)
     {
-        print();
-        if(before==-1)
-            before=d_length+1;
         //create the new item
         ListNode<T>* newNode;
         try
@@ -156,6 +152,17 @@ namespace vrcats
         {
             throw(Errors::unableToAllocateSpace());
         }
+        if(before==0||before==1)
+        {
+            if(d_head!=0)
+                d_head->hook(newNode);
+            d_head=newNode;
+            d_length++;
+            return 0;
+        }
+        if(before==-1||before>d_length)
+            before=d_length+1;
+
         ListNode<T>* p=d_head;
         for(int i=1;i<before-1;i++)
             p=p->d_next;
@@ -184,8 +191,21 @@ namespace vrcats
     int LinkedList<T>::del(long index)
     {
         //check parameter
+        if(d_length==0)
+            return -1;//nothing to delete
+        if(index>d_length||index==-1)//index==-1 means deleting the last one
+            index=d_length;
+        if(index<1)
+            index=1;
         //delete item with index specified
         ListNode<T>* p=d_head;
+        if(index==1)
+        {
+            d_head=p->d_next;
+            delete p;
+            d_length--;
+            return 0;
+        }
         for(int i=1;i<index-1;i++)
             p=p->d_next;
         //hook next to previous if both available
@@ -195,6 +215,7 @@ namespace vrcats
         if(next!=0)
             next->hook(previous);
         delete p;
+        d_length--;
     }
     template <class T>
     int LinkedList<T>::sort(bool)
@@ -207,7 +228,7 @@ namespace vrcats
         std::cout<<std::endl<<"LinkedList: "<<std::endl;
         for(int i=1;i<=d_length;i++)
         {
-            std::cout<<*(p->d_content)<<", ";
+            std::cout<<p->d_content<<", ";
             p=p->d_next;
         }
         std::cout<<std::endl<<std::endl;
