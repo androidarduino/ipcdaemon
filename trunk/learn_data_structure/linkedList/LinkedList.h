@@ -1,6 +1,7 @@
 /*
     TODO:
     1. consider to make ListNode a private class, or add LinkedList as a friend of it, making all members protected to avoid exposing them
+    2. i am facing a very weird problem. when the program gets executed, the memory seems to get overwritten by something, there might be some implicit mistake in the classes, this must be investigated in depth when i have time, to resolve the segmentation fault.
 */
 
 #ifndef LINKEDLIST_H
