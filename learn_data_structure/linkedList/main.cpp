@@ -13,7 +13,7 @@ int main()
     std::cout<<"insert 3"<<std::endl;
     list.insert(3);
     list.print();
-    //std::cout<<"insert 2"<<std::endl;
+    std::cout<<"insert 2"<<std::endl;
     list<<2;
     list.print();
     std::cout<<"insert 1"<<std::endl;
@@ -26,7 +26,7 @@ int main()
     list.insert(5,0);
     list.print();
     std::cout<<"insert 6, 1"<<std::endl;
-    list.insert(6,0);
+    list.insert(6,1);
     list.print();
     std::cout<<"insert 7, 20"<<std::endl;
     list.insert(7, 20);
@@ -65,4 +65,5 @@ int main()
     list.clear();
     list.print();
     return 0;
+
 }
