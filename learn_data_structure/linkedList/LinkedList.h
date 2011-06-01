@@ -1,6 +1,7 @@
 /*
     TODO:
     1. consider to make ListNode a private class, or add LinkedList as a friend of it, making all members protected to avoid exposing them
+    2. take the advantages of double linked list and circular linked list to improve performance
 */
 
 #ifndef LINKEDLIST_H
