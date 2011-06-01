@@ -54,14 +54,16 @@ int main()
     //sort
     //not implemented yet
     //length
-    std::cout<<"Length is: "<<list.length();
+    std::cout<<"Length is: "<<list.length()<<std::endl;
     //[]
+    std::cout<<"insert 33 at 2, and 66 at tail"<<std::endl;
     list.insert(33, 2);
     list.insert(66);
     list.print();
     std::cout<<"item 1,2,3 are: "<<list[1]<<", "<<list[2]<<", "<<list[3]<<std::endl;
     //resize
     //clear
+    std::cout<<"clear the list"<<std::endl;
     list.clear();
     list.print();
     return 0;
